@@ -28,7 +28,10 @@ class ModelFromH5(object):
     def check_for_json(self, path):
         if os.path.isfile(path):
             try:
-                link = json.load(open(path))["Link"]
+                with open(os.path.join(os.getcwd(),path), encoding='utf-8') as file:
+                    content = file.read()
+                    link = json.loads(content)["Link"]
+                    return link
             except:
                 print("Link not found!!")
                 return False

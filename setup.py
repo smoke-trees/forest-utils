@@ -1,7 +1,6 @@
-
-import codecs
 import os
 import re
+import codecs
 
 from setuptools import setup, find_packages
 
@@ -20,25 +19,23 @@ def get_version(rel_path):
     else:
         raise RuntimeError("Unable to find version string.")
 
-def get_long_description():
-    try:
-        with codecs.open("README.md", encoding="utf-8") as fh:
-            long_description = fh.read()
-        return long_description
-    except FileNotFoundError:
-        return "" 
+this_directory = os.path.abspath(os.path.dirname(__file__))
 
+with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
         name="forest_utils",
         version=get_version('VERSION.txt'),
         description="Package for Smoketrees model zoo",
-        long_description=get_long_description(),
+        long_description=long_description,
+        long_description_content_type='text/markdown',
         url="https://github.com/smoke-trees/forest-utils",
         author="Smoketrees",
         author_email=" info@smoketrees.dev",
         python_requires='>=3.4',
         packages=find_packages(include=[
+            "forest_utils"
             "forest_utils.*"
         ], exclude=["test.*, test"]),
         include_package_data=True,
