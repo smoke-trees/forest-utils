@@ -33,4 +33,4 @@ class ModelFromSpacy(object):
                 zip_ref.extractall()
             return spacy.load(self.output)
         except:
-            print("[INFO]:Error Occured while loading model")
+            print("[ERROR]:Error in loading model, please check downloaded file")
