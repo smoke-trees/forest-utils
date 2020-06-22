@@ -37,14 +37,18 @@ setup(
         url="https://github.com/smoke-trees/forest-utils",
         author="Smoketrees",
         author_email=" info@smoketrees.dev",
+        python_requires='>=3.4',
         packages=find_packages(include=[
             "forest_utils.*"
         ], exclude=["test.*, test"]),
         include_package_data=True,
-        classifiers=[
+           classifiers=[
             "Development Status :: 4 - Beta",
-            "License :: OSI Approved :: MIT License ",
+            "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3 :: Only",
             "Programming Language :: Python :: 3.6",
+            "Programming Language :: Python :: Implementation :: CPython"
         ],
         install_requires=REQUIREMENTS,
         keywords='utils package modelzoo'
