@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Jun 20 05:49:08 2020
-
-@author: tanmay
-"""
 
 import json
 import gdown
@@ -33,4 +28,4 @@ class ModelFromSpacy(object):
                 zip_ref.extractall()
             return spacy.load(self.output)
         except:
-            print("[INFO]:Error Occured while loading model")
+            print("[ERROR]:Error in loading model, please check downloaded file")
