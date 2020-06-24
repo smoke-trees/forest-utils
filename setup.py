@@ -32,10 +32,10 @@ def get_long_description():
 setup(
         name="forest_utils",
         version=get_version('VERSION.txt'),
-        description="Package for Smoketrees model zoo",
+        description="Package for SmokeTrees model zoo",
         long_description=get_long_description(),
         url="https://github.com/smoke-trees/forest-utils",
-        author="Smoketrees",
+        author="SmokeTrees",
         author_email=" info@smoketrees.dev",
         python_requires='>=3.4',
         packages=find_packages(include=[
