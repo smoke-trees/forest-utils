@@ -24,11 +24,22 @@ This package will be useful for carrying out all the utilities of the SmokeTrees
         pip install -e .
     ```
 
-## Example Usage
+## Example Usage 
+
+- Load Model using Tensorflow
 
 ``` Python
     from forest_utils import export_keras
 
     model = export_keras.ModelFromH5().load_model()
 ```
+
+- Load Dataset
+
+``` Python
+    from forest_utils import datasets
+
+    tweets = datasets.Dataset().get_emo_tweets()
+```
+
 After pulling down the model use it for predictions and other evalutaion functionalities.

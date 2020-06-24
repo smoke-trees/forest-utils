@@ -1,11 +1,9 @@
-
-import codecs
 import os
-import re
+import codecs
 
 from setuptools import setup, find_packages
 
-REQUIREMENTS = ['gdown==3.11.1', 'requests==2.24.0', 'tensorflow', 'spacy']
+REQUIREMENTS = ['gdown==3.11.1', 'requests==2.24.0', 'tensorflow', 'spacy', 'pandas']
 
 def read(rel_path):
     here = os.path.abspath(os.path.dirname(__file__))
