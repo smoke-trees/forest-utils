@@ -39,7 +39,7 @@ This package will be useful for carrying out all the utilities of the SmokeTrees
 ``` Python
     from forest_utils import datasets
 
-    model = datasets.Dataset().get_emo_tweets()
+    tweets = datasets.Dataset().get_emo_tweets()
 ```
 
 After pulling down the model use it for predictions and other evalutaion functionalities.
