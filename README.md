@@ -1,17 +1,13 @@
 ## Forest Utils package for smoketrees model zoo
 
-This package will be useful for carrying out all the utilities of the model zoo.`
+This package will be useful for carrying out all the utilities of the SmokeTrees Model Zoo lovingly called SmokeTrees Forest.`
 
 ## Features
 
 - [X] Pull down HDF5 (.h5) models from the zoo and load with keras
 - [X] Pull down the spacy model from the zoo
 
-## Steps to install the package
-
-``` bash
-    pip install forest_utils
-```
+> Package is under test before being published to PyPI
 
 ## Steps to install the package from source code
 
@@ -28,12 +24,22 @@ This package will be useful for carrying out all the utilities of the model zoo.
         pip install -e .
     ```
 
-## Example Usage
+## Example Usage 
+
+- Load Model using Tensorflow
 
 ``` Python
     from forest_utils import export_keras
 
-    export_url = '<url where model is hosted>'
-    model = export_keras.model_from_h5(export_url)
+    model = export_keras.ModelFromH5().load_model()
 ```
+
+- Load Dataset
+
+``` Python
+    from forest_utils import datasets
+
+    tweets = datasets.Dataset().get_emo_tweets()
+```
+
 After pulling down the model use it for predictions and other evalutaion functionalities.
