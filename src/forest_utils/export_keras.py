@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-
 import json
 import gdown
 
@@ -41,38 +40,17 @@ class ModelFromH5(object):
         super().__init__()
         
         self.base_url = 'https://drive.google.com/uc?id='
-        self.url_id = self.check_for_json(config)
-        self.check_for_url_id(self.url_id)
+        self.url_id = self.get_complete_url(config)
         self.output = output
         
-    def check_for_url_id(self, url):
-        if url!=False and url!='':
-            print('Link found !!')
-        else:
-            return
-        
-    def check_for_json(self, path):
-        if os.path.isfile(path):
-            try:
-                with open(os.path.join(os.getcwd(),path), encoding='utf-8') as file:
-                    content = file.read()
-                    link = json.loads(content)["Link"]
-                    return link
-            except:
-                print("Link not found!!")
-                return False
-        else:
-            print("File do not exists")
-            return False
-        
-    def get_complete_url(self, url):
+    def get_complete_url(self, config_path):
         """
         method (used internally inside class) to get complete link (including base_url) from the given url
 
         Parameters
         ----------
-        url : str
-            url to split and make complete url from
+        config_path : str
+            path to config json of the model
         
         Returns
         -------
@@ -80,7 +58,11 @@ class ModelFromH5(object):
             complete url to the model file
 
         """
-        split_url = url.split('/')
+        with open(os.path.join(os.getcwd(), config_path), 'r') as file:
+            content = file.read()
+            
+        get_url = json.loads(content)['Link']
+        split_url = get_url.split('/')
         return self.base_url + split_url[5]
         
     def load_model(self):
@@ -96,4 +78,4 @@ class ModelFromH5(object):
             gdown.download(self.url_id, self.output, quiet = False)
             return tf.keras.models.load_model(self.output)
         except:
-            print("Download error occured")
+            print("[ERROR]:Error in loading model, please check downloaded file")

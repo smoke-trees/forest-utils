@@ -1,7 +1,9 @@
-import tf_module
+import sys
 
-url = 'Enter_url_here'
+sys.path.append('../src/')
+from forest_utils import export_keras
 
-download = tf_module.model_from_h5(url)
 
-download.download_model()
+model = export_keras.ModelFromH5()
+
+print(model.load_model())
