@@ -34,7 +34,7 @@ def create_json(FOLDER):
     params['References'] = 'docs/references.md'
     params['Usage'] = 'templates/<usage_filename>'
     
-    with open(os.path.join(CURR_DIR, FOLDER, 'config.json'), 'w') as file:
+    with open(os.path.join(CURR_DIR, FOLDER, 'result.json'), 'w') as file:
         json.dump(params, file, indent=2)
         
 def create_docs_folder(FOLDER):
