@@ -30,9 +30,9 @@ class ModelFromSpacy(object):
     
     Methods
     -------
-    get_complete_url(url=""):
+    _get_complete_url(url=""):
         Returns the complete url to the required spaCy Model.
-    load_model():
+    _load_model():
         Downloads the model from the url to the output route and loads the model if successful, otherwise returns an error.
 
     """
@@ -48,11 +48,11 @@ class ModelFromSpacy(object):
         super().__init__()
         
         self.base_url = 'https://drive.google.com/uc?id='
-        self.url_id = self.get_complete_url(json.load(open('result.json','r'))["Link"])
+        self.url_id = self._get_complete_url(json.load(open('result.json','r'))["Link"])
         self.output = output
         self.zip = 'model.zip'
         
-    def get_complete_url(self, url):
+    def _get_complete_url(self, url):
         """
         Returns the complete url for downloading the required spaCy model.
 
@@ -64,7 +64,7 @@ class ModelFromSpacy(object):
         split_url = url.split('/')
         return self.base_url + split_url[5]
         
-    def load_model(self):
+    def _load_model(self):
         """
         Returns the downloaded model stored in 'output' file if model is downloaded successfully, 
         otherwise returns an error message.
@@ -78,3 +78,9 @@ class ModelFromSpacy(object):
         except:
             print("[ERROR]:Error in loading model, please check downloaded file")
 
+    def __call__(self):
+        """
+        Returns the downloaded model stored in 'output' file if model is downloaded successfully, 
+        otherwise returns an error message.
+        """
+        return _load_model(self)
