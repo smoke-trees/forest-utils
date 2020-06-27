@@ -51,6 +51,16 @@ class ModelFromSpacy(object):
         self.url_id = self.get_complete_url(json.load(open('result.json','r'))["Link"])
         self.output = output
         self.zip = 'model.zip'
+
+    def __call__(self):
+        """
+        The __call__ method enables us to write classes where the instances
+        behave like functions and can be called like a function. Once the object
+        of the class is created, the object can be used as a function with no parameter, if
+        everything is successfull the model will be loaded, otherwise an error would be returned.
+        
+        """
+        self.load_model()
         
     def get_complete_url(self, url):
         """
@@ -63,7 +73,7 @@ class ModelFromSpacy(object):
         """
         split_url = url.split('/')
         return self.base_url + split_url[5]
-        
+
     def load_model(self):
         """
         Returns the downloaded model stored in 'output' file if model is downloaded successfully, 
