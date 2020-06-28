@@ -29,9 +29,9 @@ class ModelFromH5(object):
 
     Methods
     -------
-    get_complete_url(url)
+    _get_complete_url(url)
         method to get complete link from the given url
-    load_model()
+    _load_model()
         download the model .h5 file from the url to output route and returns the loaded keras model
     """
 
@@ -39,10 +39,10 @@ class ModelFromH5(object):
         super().__init__()
         
         self.base_url = 'https://drive.google.com/uc?id='
-        self.url_id = self.get_complete_url(json.load(open('result.json', 'r'))['Link'])
+        self.url_id = self._get_complete_url(json.load(open('result.json', 'r'))['Link'])
         self.output = output
         
-    def get_complete_url(self, url):
+    def _get_complete_url(self, url):
         """
         method (used internally inside class) to get complete link (including base_url) from the given url
 
@@ -60,7 +60,7 @@ class ModelFromH5(object):
         split_url = url.split('/')
         return self.base_url + split_url[5]
         
-    def load_model(self):
+    def _load_model(self):
         """
         method to download model from the url to the output file and load it into keras
 
@@ -74,3 +74,14 @@ class ModelFromH5(object):
             return tf.keras.models.load_model(self.output)
         except:
             print("[ERROR]:Error in loading model, please check downloaded file")
+    
+    def __call__(self):
+        """
+        method to download model from the url to the output file and load it into keras
+
+        Returns 
+        -------
+        keras model
+            downloaded model loaded into keras model ready to use!
+        """
+        return _load_model(self)
