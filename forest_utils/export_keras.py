@@ -84,4 +84,4 @@ class ModelFromH5(object):
         keras model
             downloaded model loaded into keras model ready to use!
         """
-        return _load_model(self)
+        return self._load_model()
