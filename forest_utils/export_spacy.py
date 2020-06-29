@@ -83,4 +83,4 @@ class ModelFromSpacy(object):
         Returns the downloaded model stored in 'output' file if model is downloaded successfully, 
         otherwise returns an error message.
         """
-        return _load_model(self)
+        return self._load_model()
