@@ -40,6 +40,7 @@ class ModelFromH5(object):
         self.base_url = 'https://drive.google.com/uc?id='
         self.url_id = self._get_complete_url(json.load(open('result.json', 'r'))['Link'])
         self.output = output
+        self.model = self._load_model()
         
     def _get_complete_url(self, url):
         """
@@ -75,28 +76,18 @@ class ModelFromH5(object):
         except:
             print("[ERROR]:Error in loading model, please check downloaded file")
     
-    def __call__(self):
-        """
-        method to download model from the url to the output file and load it into keras
-
-        Returns 
-        -------
-        keras model
-            downloaded model loaded into keras model ready to use!
-        """
-        return self._load_model()
 
     
 class ModelFromSavedModel(object):
     """
-    A class for managing downloading and loading of spaCy models.
+    A class for managing downloading and loading of tf models.
 
     Attributes
     ----------
     base_url : str
-        This is the base url for loading the required spaCy model.
+        This is the base url for loading the required tf model.
     url_id : str
-        The complete url to the required spaCy model.
+        The complete url to the required tf model.
     output : str
         Relative path to the output file for the downloaded model.
     zip : str
@@ -112,7 +103,7 @@ class ModelFromSavedModel(object):
     """
     def __init__(self, output):
         """
-        Constructs all the necessary attributes for the ModelFromSpacy Object.
+        Constructs all the necessary attributes for the ModelFromSavedModel Object.
 
         Parameter
         ----------
@@ -125,10 +116,11 @@ class ModelFromSavedModel(object):
         self.url_id = self._get_complete_url(json.load(open('result.json','r'))["Link"])
         self.output = output
         self.zip = 'model.zip'
+        self.model = self._load_model()
         
     def _get_complete_url(self, url):
         """
-        Returns the complete url for downloading the required spaCy model.
+        Returns the complete url for downloading the required tf model.
 
         Parameter
         ---------
@@ -154,9 +146,3 @@ class ModelFromSavedModel(object):
         except:
             print("[ERROR]:Error in loading model, please check downloaded file")
 
-    def __call__(self):
-        """
-        Returns the downloaded model stored in 'output' file if model is downloaded successfully, 
-        otherwise returns an error message.
-        """
-        return self._load_model()
