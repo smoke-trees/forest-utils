@@ -15,7 +15,7 @@ class ModelFromH5(object):
         path to output file for downloading the model (by default it is 'model.h5')
     config : str
         path to the config file of the model (by default it is 'result.json')
-    
+
     Attributes
     ----------
     base_url : str
@@ -33,13 +33,14 @@ class ModelFromH5(object):
         download the model .h5 file from the url to output route and returns the loaded keras model
     """
 
-    def __init__(self, output = 'model.h5', config = 'result.json'):
+    def __init__(self, output='model.h5', config='result.json'):
         super().__init__()
-        
+
         self.base_url = 'https://drive.google.com/uc?id='
-        self.url_id = self._get_complete_url(json.load(open('result.json', 'r'))['Link'])
+        self.url_id = self._get_complete_url(
+            json.load(open('result.json', 'r'))['Link'])
         self.output = output
-        
+
     def _get_complete_url(self, url):
         """
         method (used internally inside class) to get complete link (including base_url) from the given url
@@ -48,7 +49,7 @@ class ModelFromH5(object):
         ----------
         url : str
             url to split and make complete url from
-        
+
         Returns
         -------
         link : str
@@ -57,10 +58,15 @@ class ModelFromH5(object):
         """
         split_url = url.split('/')
         return self.base_url + split_url[5]
-        
-    def _load_model(self, force_download = False):
+
+    def _load_model(self, force_download=False):
         """
         method to download model from the url to the output file and load it into keras
+
+        Parameter
+        ---------
+        force_download: bool
+            Forces to redownload  the model default(False)
 
         Returns 
         -------
@@ -69,18 +75,22 @@ class ModelFromH5(object):
         """
         try:
             if(not os.path.exists(self.output) or force_download):
-                gdown.download(self.url_id, self.output, quiet = False)
+                gdown.download(self.url_id, self.output, quiet=False)
             return tf.keras.models.load_model(self.output)
         except:
             print("[ERROR]:Error in loading model, please check downloaded file")
-    
-    def __call__(self):
+
+    def __call__(self, force_download=False):
         """
         method to download model from the url to the output file and load it into keras
 
+        Parameter
+        ---------
+        force_download: bool
+            Forces to redownload  the model default(False)
         Returns 
         -------
         keras model
             downloaded model loaded into keras model ready to use!
         """
-        return self._load_model()
+        return self._load_model(force_download=force_download)

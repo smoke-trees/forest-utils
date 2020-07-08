@@ -19,7 +19,7 @@ class ModelFromSpacy(object):
         Relative path to the output file for the downloaded model.
     zip : str
         Path to the zip file (by default it is 'model.zip').
-    
+
     Methods
     -------
     _get_complete_url(url=""):
@@ -28,6 +28,7 @@ class ModelFromSpacy(object):
         Downloads the model from the url to the output route and loads the model if successful, otherwise returns an error.
 
     """
+
     def __init__(self, output):
         """
         Constructs all the necessary attributes for the ModelFromSpacy Object.
@@ -38,12 +39,13 @@ class ModelFromSpacy(object):
 
         """
         super().__init__()
-        
+
         self.base_url = 'https://drive.google.com/uc?id='
-        self.url_id = self._get_complete_url(json.load(open('result.json','r'))["Link"])
+        self.url_id = self._get_complete_url(
+            json.load(open('result.json', 'r'))["Link"])
         self.output = output
         self.zip = 'model.zip'
-        
+
     def _get_complete_url(self, url):
         """
         Returns the complete url for downloading the required spaCy model.
@@ -55,16 +57,21 @@ class ModelFromSpacy(object):
         """
         split_url = url.split('/')
         return self.base_url + split_url[5]
-        
-    def _load_model(self, force_download = False):
+
+    def _load_model(self, force_download=False):
         """
         Returns the downloaded model stored in 'output' file if model is downloaded successfully, 
         otherwise returns an error message.
+
+        Parameter
+        ---------
+        force_download: bool
+            Forces to redownload  the model default(False)
         """
 
         try:
             if(not os.path.exists(self.output) or force_download):
-                gdown.download(self.url_id, self.zip, quiet = False)
+                gdown.download(self.url_id, self.zip, quiet=False)
             if not os.path.exists(self.output):
                 with zipfile.ZipFile(self.zip, 'r') as zip_ref:
                     zip_ref.extractall()
@@ -72,9 +79,14 @@ class ModelFromSpacy(object):
         except:
             print("[ERROR]:Error in loading model, please check downloaded file")
 
-    def __call__(self):
+    def __call__(self, force_download=False):
         """
         Returns the downloaded model stored in 'output' file if model is downloaded successfully, 
         otherwise returns an error message.
+
+        Parameter
+        ---------
+        force_download: bool
+            Forces to redownload  the model default(False)
         """
-        return self._load_model()
+        return self._load_model(force_download=force_download)
