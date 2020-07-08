@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
+import os
 import json
 import gdown
 
@@ -60,7 +58,7 @@ class ModelFromH5(object):
         split_url = url.split('/')
         return self.base_url + split_url[5]
         
-    def _load_model(self):
+    def _load_model(self, force_download = False):
         """
         method to download model from the url to the output file and load it into keras
 
@@ -70,7 +68,8 @@ class ModelFromH5(object):
             downloaded model loaded into keras model ready to use!
         """
         try:
-            gdown.download(self.url_id, self.output, quiet = False)
+            if(not os.path.exists(self.output) or force_download):
+                gdown.download(self.url_id, self.output, quiet = False)
             return tf.keras.models.load_model(self.output)
         except:
             print("[ERROR]:Error in loading model, please check downloaded file")

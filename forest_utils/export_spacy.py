@@ -1,12 +1,4 @@
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jun 20 05:49:08 2020
-
-@author: tanmay
-"""
-
+import os
 import json
 import gdown
 import spacy
@@ -64,16 +56,18 @@ class ModelFromSpacy(object):
         split_url = url.split('/')
         return self.base_url + split_url[5]
         
-    def _load_model(self):
+    def _load_model(self, force_download = False):
         """
         Returns the downloaded model stored in 'output' file if model is downloaded successfully, 
         otherwise returns an error message.
         """
 
         try:
-            gdown.download(self.url_id, self.zip, quiet = False)
-            with zipfile.ZipFile(self.zip, 'r') as zip_ref:
-                zip_ref.extractall()
+            if(not os.path.exists(self.output) or force_download):
+                gdown.download(self.url_id, self.zip, quiet = False)
+            if not os.path.exists(self.output):
+                with zipfile.ZipFile(self.zip, 'r') as zip_ref:
+                    zip_ref.extractall()
             return spacy.load(self.output)
         except:
             print("[ERROR]:Error in loading model, please check downloaded file")
