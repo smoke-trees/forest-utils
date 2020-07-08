@@ -3,7 +3,7 @@ import codecs
 
 from setuptools import setup, find_packages
 
-REQUIREMENTS = ['gdown==3.11.1', 'requests==2.24.0', 'tensorflow', 'spacy', 'pandas']
+REQUIREMENTS = ['gdown==3.11.1', 'requests==2.24.0', 'tensorflow', 'spacy==2.2.0', 'pandas', "transformers", "torch"]
 
 def read(rel_path):
     here = os.path.abspath(os.path.dirname(__file__))
