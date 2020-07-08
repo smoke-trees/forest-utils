@@ -43,6 +43,7 @@ class ModelFromSpacy(object):
         self.url_id = self._get_complete_url(json.load(open('result.json','r'))["Link"])
         self.output = output
         self.zip = 'model.zip'
+        self.model = self._load_model()
         
     def _get_complete_url(self, url):
         """
@@ -71,10 +72,3 @@ class ModelFromSpacy(object):
             return spacy.load(self.output)
         except:
             print("[ERROR]:Error in loading model, please check downloaded file")
-
-    def __call__(self):
-        """
-        Returns the downloaded model stored in 'output' file if model is downloaded successfully, 
-        otherwise returns an error message.
-        """
-        return self._load_model()
