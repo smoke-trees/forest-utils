@@ -48,8 +48,8 @@ class ModelFromH5(object):
 
         Parameters
         ----------
-        url : str
-            url to split and make complete url from
+        config_path : str
+            path to config json of the model
         
         Returns
         -------
@@ -57,7 +57,11 @@ class ModelFromH5(object):
             complete url to the model file
 
         """
-        split_url = url.split('/')
+        with open(os.path.join(os.getcwd(), config_path), 'r') as file:
+            content = file.read()
+            
+        get_url = json.loads(content)['Link']
+        split_url = get_url.split('/')
         return self.base_url + split_url[5]
         
     def _load_model(self, force_download = False):

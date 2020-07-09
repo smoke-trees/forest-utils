@@ -1,7 +1,9 @@
 import os
+import re
 import codecs
 
 from setuptools import setup, find_packages
+
 
 REQUIREMENTS = ['gdown==3.11.1', 'requests==2.24.0', 'tensorflow', 'spacy==2.2.0', 'pandas', "transformers", "torch"]
 
@@ -18,24 +20,17 @@ def get_version(rel_path):
     else:
         raise RuntimeError("Unable to find version string.")
 
-def get_long_description():
-    try:
-        with codecs.open("README.md", encoding="utf-8") as fh:
-            long_description = fh.read()
-        return long_description
-    except FileNotFoundError:
-        return "" 
 
-
+# Metadata goes in setup.cfg. These are here for GitHub's dependency graph.
 setup(
         name="forest_utils",
         version=get_version('VERSION.txt'),
-        description="Package for SmokeTrees model zoo",
+        description="Utility Package for SmokeTrees Model Zoo",
         long_description=get_long_description(),
         url="https://github.com/smoke-trees/forest-utils",
         author="SmokeTrees",
         author_email=" info@smoketrees.dev",
-        python_requires='>=3.4',
+        python_requires='>=3.6',
         packages=find_packages(include=[
             "forest_utils.*"
         ], exclude=["test.*, test"]),
