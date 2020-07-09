@@ -1,20 +1,21 @@
 import os
 import json
 import gdown
-import spacy
+import torch
 import zipfile
+import transformers
 
 
-class ModelFromSpacy(object):
+class ModelFromTransformers(object):
     """
-    A class for managing downloading and loading of spaCy models.
+    A class for managing downloading and loading of transformers models.
 
     Attributes
     ----------
     base_url : str
-        This is the base url for loading the required spaCy model.
+        This is the base url for loading the required transformers model.
     url_id : str
-        The complete url to the required spaCy model.
+        The complete url to the required transformers model.
     output : str
         Relative path to the output file for the downloaded model.
     zip : str
@@ -23,14 +24,14 @@ class ModelFromSpacy(object):
     Methods
     -------
     _get_complete_url(url=""):
-        Returns the complete url to the required spaCy Model.
+        Returns the complete url to the required transformers Model.
     _load_model():
         Downloads the model from the url to the output route and loads the model if successful, otherwise returns an error.
 
     """
     def __init__(self, output):
         """
-        Constructs all the necessary attributes for the ModelFromSpacy Object.
+        Constructs all the necessary attributes for the ModelFromTransformers Object.
 
         Parameter
         ----------
@@ -43,11 +44,12 @@ class ModelFromSpacy(object):
         self.url_id = self._get_complete_url(json.load(open('result.json','r'))["Link"])
         self.output = output
         self.zip = 'model.zip'
-        self.model = self._load_model()
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.tokenizer, self.model = self._load_model()
         
     def _get_complete_url(self, url):
         """
-        Returns the complete url for downloading the required spaCy model.
+        Returns the complete url for downloading the required transformers model.
 
         Parameter
         ---------
@@ -69,6 +71,12 @@ class ModelFromSpacy(object):
             if not os.path.exists(self.output):
                 with zipfile.ZipFile(self.zip, 'r') as zip_ref:
                     zip_ref.extractall()
-            return spacy.load(self.output)
+            return transformers.AutoTokenizer.from_pretrained(self.output + "/tokenizer"), transformers.AutoModelWithLMHead.from_pretrained(self.output + "/model").to(self.device)
         except:
             print("[ERROR]:Error in loading model, please check downloaded file")
+            
+    def predict(self, sentence):
+        
+        with torch.no_grad():
+            vector = self.model(torch.tensor(self.tokenizer.encode(sentence, add_special_tokens = True)).to(self.device).unsqueeze(0))[0].cpu().numpy().tolist()
+        return vector
