@@ -64,7 +64,7 @@ class ModelFromSpacy(object):
         """
 
         try:
-            if(not os.path.exists(self.output) or force_download):
+            if(not os.path.exists(self.zip) or force_download):
                 gdown.download(self.url_id, self.zip, quiet = False)
             if not os.path.exists(self.output):
                 with zipfile.ZipFile(self.zip, 'r') as zip_ref:
