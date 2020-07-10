@@ -14,8 +14,6 @@ class ModelFromH5(object):
     ----------
     output : str
         path to output file for downloading the model (by default it is 'model.h5')
-    config : str
-        path to the config file of the model (by default it is 'result.json')
     
     Attributes
     ----------
@@ -34,7 +32,7 @@ class ModelFromH5(object):
         download the model .h5 file from the url to output route and returns the loaded keras model
     """
 
-    def __init__(self, output = 'model.h5', config = 'result.json'):
+    def __init__(self, output = 'model.h5'):
         super().__init__()
         
         self.base_url = 'https://drive.google.com/uc?id='
@@ -48,8 +46,8 @@ class ModelFromH5(object):
 
         Parameters
         ----------
-        config_path : str
-            path to config json of the model
+        url : str
+            url of the model
         
         Returns
         -------
@@ -57,11 +55,7 @@ class ModelFromH5(object):
             complete url to the model file
 
         """
-        with open(os.path.join(os.getcwd(), config_path), 'r') as file:
-            content = file.read()
-            
-        get_url = json.loads(content)['Link']
-        split_url = get_url.split('/')
+        split_url = url.split('/')
         return self.base_url + split_url[5]
         
     def _load_model(self, force_download = False):
