@@ -78,10 +78,10 @@ class ModelFromTransformerWithLMHead(object):
     def predict(self, sentence):
         
         with torch.no_grad():
-            vector = self.model(torch.tensor(self.tokenizer.encode(sentence, add_special_tokens = True)).to(self.device).unsqueeze(0)).cpu()
+            vector = self.model(torch.tensor(self.tokenizer.encode(sentence, add_special_tokens = True)).to(self.device).unsqueeze(0))
         return vector
     
     def fill_mask(self, sentence):
         
-        nlp_fill = transformers.pipeline('fill-mask', model = self.model, tokenizer = self.tokenizer)
+        nlp_fill = transformers.pipeline('fill-mask', model = self.model.to('cpu'), tokenizer = self.tokenizer)
         return nlp_fill(sentence + nlp_fill.tokenizer.mask_token)
