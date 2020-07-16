@@ -6,7 +6,7 @@ import zipfile
 import transformers
 
 
-class ModelFromTransformers(object):
+class ModelFromTransformerWithLMHead(object):
     """
     A class for managing downloading and loading of transformers models.
 
@@ -71,12 +71,12 @@ class ModelFromTransformers(object):
             if not os.path.exists(self.output):
                 with zipfile.ZipFile(self.zip, 'r') as zip_ref:
                     zip_ref.extractall()
-            return transformers.AutoTokenizer.from_pretrained(self.output + "/tokenizer"), transformers.AutoModelWithLMHead.from_pretrained(self.output + "/model").to(self.device)
+            return transformers.AutoTokenizer.from_pretrained(self.output), transformers.AutoModelWithLMHead.from_pretrained(self.output).to(self.device)
         except:
             print("[ERROR]:Error in loading model, please check downloaded file")
             
     def predict(self, sentence):
         
         with torch.no_grad():
-            vector = self.model(torch.tensor(self.tokenizer.encode(sentence, add_special_tokens = True)).to(self.device).unsqueeze(0))[0].cpu().numpy().tolist()
+            vector = self.model(torch.tensor(self.tokenizer.encode(sentence, add_special_tokens = True)).to(self.device).unsqueeze(0)).cpu()
         return vector
