@@ -80,3 +80,8 @@ class ModelFromTransformerWithLMHead(object):
         with torch.no_grad():
             vector = self.model(torch.tensor(self.tokenizer.encode(sentence, add_special_tokens = True)).to(self.device).unsqueeze(0)).cpu()
         return vector
+    
+    def fill_mask(self, sentence):
+        
+        nlp_fill = transformers.pipeline('fill-mask', model = self.model, tokenizer = self.tokenizer)
+        return nlp_fill(sentence + nlp_fill.tokenizer.mask_token)
