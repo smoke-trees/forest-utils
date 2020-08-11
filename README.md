@@ -1,4 +1,4 @@
-## Forest Utils package for smoketrees model zoo
+## forest-utils - A utility tool for SmokeTrees Model Zoo
 
 [![PyPI version](https://badge.fury.io/py/forest-utils.svg)](https://badge.fury.io/py/forest-utils)  [![Generic badge](https://img.shields.io/badge/modelzoo-website-brightgreen.svg)](https://smoketrees.dev/forest/)
 
