@@ -1,5 +1,7 @@
 ## Forest Utils package for smoketrees model zoo
 
+[![PyPI version](https://badge.fury.io/py/forest-utils.svg)](https://badge.fury.io/py/forest-utils)  [![Generic badge](https://img.shields.io/badge/modelzoo-website-brightgreen.svg)](https://smoketrees.dev/forest/)
+
 This package will be useful for carrying out all the utilities of the SmokeTrees Model Zoo lovingly called SmokeTrees Forest.`
 
 ### Features
